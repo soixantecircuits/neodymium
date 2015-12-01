@@ -1,0 +1,39 @@
+{
+  "name": "generator-neodymium",
+  "version": "1.0.0",
+  "description": "Scaffolds a clean and combat ready electron app.",
+  "license": "MIT",
+  "repository": "soixantecircuits/neodymium",
+  "author": [
+    {
+      "name": "hugohil",
+      "email": "hugo@soixantecircuits.fr",
+      "url": "soixantecircuits.fr"
+    }
+  ],
+  "engines": {
+    "node": ">=4.0.0"
+  },
+  "files": [
+    "app"
+  ],
+  "keywords": [
+    "yeoman-generator",
+    "boilerplate",
+    "template",
+    "scaffold",
+    "node",
+    "desktop",
+    "app",
+    "application",
+    "electron",
+    "atom-shell"
+  ],
+  "dependencies": {
+    "underscore.string": "^3.0.3",
+    "yeoman-generator": "^0.21.1"
+  },
+  "devDependencies": {
+    "yeoman-assert": "^2.0.0"
+  }
+}
