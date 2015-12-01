@@ -53,6 +53,7 @@ $ yo neodymium
 
 * ~~Integrate webpack~~
 * Add livereload in dev mode
+* Make kiosk mode optionnal
 * Integrate Bootstrap css
 * Integrate Vue.js
 * Make electron support optionnal
