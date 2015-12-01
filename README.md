@@ -3,7 +3,7 @@
 > Scaffolds a clean and combat ready electron app.
 
 ```
-app/templates
+your-app/
 ├── LICENSE
 ├── README.md
 ├── .package.json
