@@ -15,7 +15,7 @@
     "start": "export NODE_ENV='dev'; electron .",
     "build": "export NODE_ENV='production'; electron-packager . $npm_package_productName --out=bin --ignore='^/bin$' --prune --asar --all --version=$npm_package_electronVersion --overwrite",
     "build-osx": "export NODE_ENV='production'; electron-packager . $npm_package_productName --out=bin --platform=darwin --arch=x64 --ignore='^/bin$' --prune --version=$npm_package_electronVersion --overwrite",
-    "build-linux": "export NODE_ENV='production'; electron-packager . $npm_package_productName --out=bin --platform=linuw --arch=x64 --ignore='^/bin$' --prune --version=$npm_package_electronVersion --overwrite",
+    "build-linux": "export NODE_ENV='production'; electron-packager . $npm_package_productName --out=bin --platform=linux --arch=x64 --ignore='^/bin$' --prune --version=$npm_package_electronVersion --overwrite",
     "build-win": "export NODE_ENV='production'; electron-packager . $npm_package_productName --out=bin --platform=win --arch=x64 --ignore='^/bin$' --prune --version=$npm_package_electronVersion --overwrite"
   },
   "files": [
