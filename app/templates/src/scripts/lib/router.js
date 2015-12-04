@@ -23,6 +23,11 @@ module.exports = function router(){
   }
 
   self.init = function init(){
+    crossroads.bypassed.add(function(request){
+      crossroads.parse('home');
+      setHashSilently('home');
+    });
+
     crossroads.addRoute('/{route}', function(route){
       // store the last route
       past = current;
@@ -43,12 +48,6 @@ module.exports = function router(){
     hasher.initialized.add(parseHash);
     hasher.changed.add(parseHash);
     hasher.init();
-
-    crossroads.bypassed.add(function(request){
-      crossroads.parse('/home');
-    });
-
-    crossroads.parse('/home');
   }
 
   function setBodyClass(route){
@@ -58,6 +57,12 @@ module.exports = function router(){
 
   function parseHash (newHash, oldHash){
     crossroads.parse(newHash);
+  }
+
+  function setHashSilently(hash){
+    hasher.changed.active = false; //disable changed signal
+    hasher.setHash(hash); //set hash without dispatching changed signal
+    hasher.changed.active = true; //re-enable signal
   }
 
   function setView(view){
