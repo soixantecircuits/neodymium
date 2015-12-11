@@ -15,13 +15,49 @@
 $ npm install
 ```
 
+##### A note about webpack
+
+We use webpack to manage dependencies loading through the app. Basically, it compiles them all into one `bundle.js` file and handle the `require([module])` stuffs. This means we **exclusively** use `npm` to manage our external dependencies.
+
+Webpack does not only manage `js` modules, but also `css` stylesheets and all the app assets (images, videos, `json` datas, ...). It can be a bit confusing at first to load your stylesheets with a `require('../styles/main.css')` (cf. [entry script](src/entry.js)) instead of a good old `<link>` tag, but it keeps the workflow clean. This also mean we load assets in `js`.
+
+Instead of doing:
+```html
+<img src="assets/my-img.png" />
+```
+You do:
+```html
+<img class="img-selector" />
+```
+```js
+document.querySelector('img-selector').src = require('../assets/my-img.png');
+```
+
+*the css loader will do this for you, so you can just load your assets with `url(../my/image.png)`, just use its absolute path.*
+
+Finally, webpack itself is modular and you can add many [loaders](https://webpack.github.io/docs/loaders.html) to handle what you need to handle. Just `npm i --save` the ones you need.
+
+*If you find a good read about how to properly load assets with webpack, we'd really like to take a look !*
+
 #### Run
 
+##### In the browser
+
 ```
-$ webpack --progress --colors
+$ gulp dev
+```
+
+##### In electron
+
+```
+$ gulp dev
+```
+
+And in an other shell window:
+
+```
 $ npm start
 ```
-*You can use the `--watch` switch with the `webpack` command to compile each time you save a file. In this case you'll need to run `npm start` in an other shell.*
 
 ## Build
 
@@ -32,7 +68,7 @@ $ npm run build
 
 Builds the app for OS X, Linux, and Windows, using [electron-packager](https://github.com/maxogden/electron-packager). It will result in an [asar packaged](https://github.com/atom/electron/blob/master/docs/tutorial/application-packaging.md) app.
 
-Neodymium also provides more developers friendly build scripts:
+We also provides more developer friendly build scripts:
 ```
 $ npm run build-osx # unpackaged osx 64bits app
 $ npm run build-linux # unpackaged linux 64bits app

@@ -22,7 +22,7 @@ function onClosed() {
 
 function createMainWindow() {
 	var winOptions = {width: 1920, height: 1080};
-	if(process.env['NODE_ENV'] != 'dev'){
+	if(process.env['NODE_ENV'] == 'production'){
 		winOptions.kiosk = true;
 		winOptions.frame = false;
 		winOptions.resizable = false;
@@ -31,12 +31,13 @@ function createMainWindow() {
 	}
 	const win = new electron.BrowserWindow(winOptions);
 
-	win.loadURL(`file://${__dirname}/dist/index.html`);
-	win.on('closed', onClosed);
-
 	if(process.env['NODE_ENV'] == 'dev'){
+		win.loadURL('http://0.0.0.0:8080/');
 		win.openDevTools();
+	} else {
+		win.loadURL(`file://${__dirname}/dist/index.html`);
 	}
+	win.on('closed', onClosed);
 
 	return win;
 }

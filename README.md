@@ -15,6 +15,7 @@ your-app/
 ├── .gitignore
 ├── index.js
 ├── src
+|   |   # You'll probably want to add an `assets` folder here
 │   ├── entry.js
 │   ├── index.html
 │   ├── partials
@@ -52,7 +53,7 @@ $ yo neodymium
 ## To do
 
 * ~~Integrate webpack~~
-* Add livereload in dev mode
+* ~~Add livereload in dev mode~~
 * Make kiosk mode optionnal
 * Integrate Bootstrap css
 * Integrate Vue.js
