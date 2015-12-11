@@ -14,5 +14,6 @@ module.exports = {
       {test: /\.jpg$/, loader: "file-loader"},
       {test: /\.mp4$/, loader: "file-loader"},
     ]
-  }
+  },
+  target: 'atom'
 };
