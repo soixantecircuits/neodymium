@@ -1,5 +1,7 @@
 # <%= appName %>
 
+[![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
+
 > <%= appName %> by <%= username %>
 
 ## Develop
@@ -8,12 +10,14 @@
 
 * `node >= v4.0.0` ([download here](http://nodejs.org))
 * `webpack` ([download here](https://github.com/webpack/webpack))
+* Follow [JavaScript Standard Style](https://github.com/feross/standard) and use a [text editor plugin](https://github.com/feross/standard#text-editor-plugins)
 
 #### Install dependencies
 
 ```
 $ npm install
 ```
+*(Yeoman should have done this for you)*
 
 ##### A note about webpack
 
@@ -30,7 +34,8 @@ You do:
 <img class="img-selector" />
 ```
 ```js
-document.querySelector('img-selector').src = require('../assets/my-img.png');
+  document.querySelector('img-selector').src = require('../assets/my-img.png')
+
 ```
 
 *the css loader will do this for you, so you can just load your assets with `url(../my/image.png)`, just use its absolute path.*

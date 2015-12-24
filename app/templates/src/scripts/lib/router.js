@@ -1,73 +1,72 @@
-module.exports = function router(){
-  'use strict';
+module.exports = (function router () {
+  'use strict'
 
-  const crossroads = require('crossroads');
-  const signals = require('signals');
-  const hasher = require('hasher');
+  const crossroads = require('crossroads')
+  const hasher = require('hasher')
 
-  let self = {};
+  let self = {}
 
   const paths = [
     'home',
     'page'
-  ];
+  ]
 
-  let controllers = {};
-  let views = {};
-  let past, current;
+  let controllers = {}
+  let views = {}
+  let past, current
 
   for (let i = 0; i < paths.length; i++) {
-    let path = paths[i];
-    controllers[path] = require('../controllers/' + path);
-    views[path] = require('../../partials/' + path + '.html');
+    let path = paths[i]
+    controllers[path] = require('../controllers/' + path)
+    views[path] = require('../../partials/' + path + '.html')
   }
 
-  self.init = function init(){
-    crossroads.bypassed.add(function(request){
-      crossroads.parse('home');
-      setHashSilently('home');
-    });
+  self.init = function init () {
+    crossroads.bypassed.add(function (request) {
+      crossroads.parse('home')
+      setHashSilently('home')
+    })
 
-    crossroads.addRoute('/{route}', function(route){
+    crossroads.addRoute('/{route}', function (route) {
       // store the last route
-      past = current;
+      past = current
       // destroy current controller
-      if(self.past){
-        controllers[self.past].destroy();
+      if (self.past) {
+        controllers[self.past].destroy()
       }
       // set route view
-      setView(views[route]);
+      setView(views[route])
       // add a class `route` to the body
-      setBodyClass(route);
+      setBodyClass(route)
       // init route controller
-      controllers[route].init();
+      controllers[route].init()
       // store current route
-      current = route;
-    });
+      current = route
+    })
 
-    hasher.initialized.add(parseHash);
-    hasher.changed.add(parseHash);
-    hasher.init();
+    hasher.initialized.add(parseHash)
+    hasher.changed.add(parseHash)
+    hasher.init()
   }
 
-  function setBodyClass(route){
-    document.body.classList.remove(past + '-view');
-    document.body.classList.add(route + '-view');
+  function setBodyClass (route) {
+    document.body.classList.remove(past + '-view')
+    document.body.classList.add(route + '-view')
   }
 
-  function parseHash (newHash, oldHash){
-    crossroads.parse(newHash);
+  function parseHash (newHash, oldHash) {
+    crossroads.parse(newHash)
   }
 
-  function setHashSilently(hash){
-    hasher.changed.active = false; //disable changed signal
-    hasher.setHash(hash); //set hash without dispatching changed signal
-    hasher.changed.active = true; //re-enable signal
+  function setHashSilently (hash) {
+    hasher.changed.active = false // disable changed signal
+    hasher.setHash(hash) // set hash without dispatching changed signal
+    hasher.changed.active = true // re-enable signal
   }
 
-  function setView(view){
-    document.querySelector('.main').innerHTML = view;
+  function setView (view) {
+    document.querySelector('.main').innerHTML = view
   }
 
-  return self;
-}();
+  return self
+})()
