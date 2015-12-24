@@ -1,7 +1,7 @@
 'use strict';
 const electron = require('electron');
+const server = require('./server/main.js')
 const app = electron.app;
-
 // report crashes to the Electron project
 require('crash-reporter').start();
 
@@ -54,4 +54,5 @@ app.on('activate', () => {
 
 app.on('ready', () => {
 	mainWindow = createMainWindow();
+	server.init()
 });

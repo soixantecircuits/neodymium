@@ -13,7 +13,7 @@ gulp.task('dev', function(){
     livereload: true
   });
 
-  gulp.src('./src/index.html').pipe(gulp.dest('dist/'));
+  gulp.src('./app/index.html').pipe(gulp.dest('dist/'));
 
   compiler.watch({}, function(err, stats) {
     var jsonStats = stats.toJson();
@@ -28,8 +28,8 @@ gulp.task('dev', function(){
     }
   });
 
-  gulp.watch('./src/index.html', function(event){
-    gulp.src('./src/index.html').pipe(gulp.dest('dist/'));
+  gulp.watch('./app/index.html', function(event){
+    gulp.src('./app/index.html').pipe(gulp.dest('dist/'));
   });
 
   gulp.watch('./dist/*', function(event){
