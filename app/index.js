@@ -58,7 +58,6 @@ module.exports = yeoman.generators.Base.extend({
       mv('gitignore', '.gitignore')
       mv('_package.json', 'package.json')
 
-      var repo = 'git@' + self.gitService + ':' + props.username + '/' + props.appName + '.git'
       self
         .spawnCommand('git', ['init'])
         .on('close', function () {
