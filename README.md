@@ -14,7 +14,7 @@ your-app/
 ├── .gitattributes
 ├── .gitignore
 ├── index.js
-├── src
+├── app
 |   |   # You'll probably want to add an `assets` folder here
 │   ├── entry.js
 │   ├── index.html
@@ -33,6 +33,9 @@ your-app/
 │   │       └── router.js
 │   └── styles
 │       └── main.css
+├── server
+|   |   # Everything related to server should go there
+│   └── main.js // The entry point of the server
 └── webpack.config.js
 ```
 

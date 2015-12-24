@@ -1,5 +1,5 @@
 module.exports = {
   init: function (){
-    console.log('init server')
+    console.log('Launch server')
   }
 }
