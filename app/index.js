@@ -26,7 +26,7 @@ module.exports = yeoman.generators.Base.extend({
       message: 'Would you like to add a git integration? (yes/no)',
       store: true,
       validate: function (val) {
-        val = (val.match(/y((es)?|$)/gi).length)
+        val = (val.match(/y((es)?|$)/gi)) ? true : false
         return true
       }
     },
