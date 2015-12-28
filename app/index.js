@@ -137,7 +137,7 @@ module.exports = generators.Base.extend({
   },
   conflicts: function () {},
   install: function () {
-    this.log('install')
+    this.installDependencies({bower: false})
   },
   end: function () {
     if (this.git) {
