@@ -87,34 +87,51 @@ module.exports = generators.Base.extend({
       this.username = answers.username
       this.git = answers.git
       this.front = answers.front
-      this.back = answers.back
       this.electron = answers.electron
       this.electronVersion = answers.electronVersion
+      this.back = answers.back
       done()
     }.bind(this))
   },
   configuring: function () {},
   writing: function () {
-    this.fs.copy(this.templatePath() + '/LICENSE', this.destinationPath())
-    this.fs.copy(this.templatePath() + '/README.md', this.destinationPath())
-    this.fs.copy(this.templatePath() + '/_package.json', this.destinationPath() + '/package.json')
+    const config = {
+      appname: this.appname,
+      description: this.description,
+      username: this.username,
+      git: this.git,
+      front: this.front,
+      electron: this.electron,
+      electronVersion: this.electronVersion,
+      back: this.back
+    }
+
+    /*
+     * A bug (either in the `yeoman-generator` or the `mem-fs-editor` module) crash the generator
+     * if you copy without providing a parameter to the destinationPath() method.
+     * Got no time (nor internet connection, actually in a train right now) to check on this, but will do.
+    */
+
+    this.fs.copyTpl(this.templatePath('LICENSE'), this.destinationPath('LICENSE'), config)
+    this.fs.copyTpl(this.templatePath('README.md'), this.destinationPath('README.md'), config)
+    this.fs.copyTpl(this.templatePath('_package.json'), this.destinationPath('package.json'), config)
 
     if (this.git) {
-      this.fs.copy(this.templatePath() + '/gitignore', this.destinationPath() + '/.gitignore')
-      this.fs.copy(this.templatePath() + '/gitattributes', this.destinationPath() + '/.gitattributes')
+      this.fs.copyTpl(this.templatePath('gitignore'), this.destinationPath('.gitignore'), config)
+      this.fs.copyTpl(this.templatePath('gitattributes'), this.destinationPath('.gitattributes'), config)
     }
     if (this.front) {
-      this.fs.copy(this.templatePath() + '/app', this.destinationPath() + '/app')
-      this.fs.copy(this.templatePath() + '/webpack.config.js', this.destinationPath())
-      this.fs.copy(this.templatePath() + '/gulpfile.js', this.destinationPath())
+      this.fs.copyTpl(this.templatePath('app'), this.destinationPath('app'), config)
+      this.fs.copyTpl(this.templatePath('webpack.config.js'), this.destinationPath('webpack.config.js'), config)
+      this.fs.copyTpl(this.templatePath('gulpfile.js'), this.destinationPath('gulpfile.js'), config)
     }
     if (this.electron) {
-      this.fs.copy(this.templatePath() + '/index-electron.js', this.destinationPath() + '/index.js')
+      this.fs.copyTpl(this.templatePath('index-electron.js'), this.destinationPath('index.js'), config)
     }
     if (this.back) {
-      this.fs.copy(this.templatePath() + '/server', this.destinationPath() + '/server')
+      this.fs.copyTpl(this.templatePath('server'), this.destinationPath('server'), config)
       if (!this.electron) {
-        this.fs.copy(this.templatePath() + '/index-server.js', this.destinationPath() + '/index.js')
+        this.fs.copyTpl(this.templatePath('index-server.js'), this.destinationPath('index.js'), config)
       }
     }
   },

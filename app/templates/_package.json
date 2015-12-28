@@ -7,31 +7,46 @@
   "author": {
     "name": "<%= username %>"
   },
+  <% if (electron) { %>
   "electronVersion": "<%= electronVersion %>",
+  <% } %>
   "scripts": {
+    <% if (electron) { %>
     "start": "export NODE_ENV='dev'; electron .",
     "build": "export NODE_ENV='production'; electron-packager . $npm_package_name --out=bin --ignore='^/bin$' --prune --asar --all --version=$npm_package_electronVersion --overwrite",
     "build-osx": "export NODE_ENV='production'; electron-packager . $npm_package_name --out=bin --platform=darwin --arch=x64 --ignore='^/bin$' --prune --version=$npm_package_electronVersion --overwrite",
     "build-linux": "export NODE_ENV='production'; electron-packager . $npm_package_name --out=bin --platform=linux --arch=x64 --ignore='^/bin$' --prune --version=$npm_package_electronVersion --overwrite",
     "build-win": "export NODE_ENV='production'; electron-packager . $npm_package_name --out=bin --platform=win --arch=x64 --ignore='^/bin$' --prune --version=$npm_package_electronVersion --overwrite"
+    <% } else if (back) { %>
+    "start": "export NODE_ENV='dev'; node index.js"
+    <% } %>
   },
   "files": [
     "index.js",
+    <% if (front) { %>
     "app/"
+    <% } %>
   ],
   "dependencies": {
+    <% if (front) { %>
     "crossroads": "^0.12.2",
+    <% if (electron) { %>
     "electron-debug": "^0.5.0",
+    <% } %>
     "hasher": "^1.2.0",
     "signals": "^1.0.0"
+    <% } %>
   },
   "devDependencies": {
+    <% if (front) { %>
     "babel-core": "^6.2.1",
     "babel-loader": "^6.2.0",
     "babel-preset-es2015": "^6.1.18",
     "css-loader": "^0.23.0",
+    <% if (electron) { %>
     "electron-packager": "^5.0.0",
     "electron-prebuilt": "^0.35.0",
+    <% } %>
     "file-loader": "^0.8.5",
     "gulp": "^3.9.0",
     "gulp-connect": "^2.2.0",
@@ -40,5 +55,6 @@
     "style-loader": "^0.13.0",
     "url-loader": "^0.5.7",
     "webpack": "^1.12.9"
+    <% } %>
   }
 }

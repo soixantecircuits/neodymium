@@ -15,5 +15,7 @@ module.exports = {
       {test: /\.mp4$/, loader: 'file-loader'}
     ]
   },
+  <% if (electron) { %>
   target: 'atom'
+  <% } %>
 }
