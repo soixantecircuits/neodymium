@@ -37,7 +37,7 @@ your-app/
 │       └── main.css
 ├── server
 |   |   # Everything related to server should go there
-│   └── main.js // The entry point of the server
+│   └── main.js # The entry point of the server
 └── webpack.config.js
 ```
 
