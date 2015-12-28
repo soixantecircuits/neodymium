@@ -62,7 +62,7 @@ $ yo neodymium
 * Make kiosk mode optionnal
 * Integrate Bootstrap css
 * Integrate Vue.js
-* Make electron support optionnal
+* ~~Make electron support optionnal~~
 * Propose a Phonegap support
 * Find a way to copy just the `node_modules` the app needs
 
