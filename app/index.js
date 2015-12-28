@@ -140,6 +140,19 @@ module.exports = generators.Base.extend({
     this.log('install')
   },
   end: function () {
+    if (this.git) {
+      let self = this
+      self
+        .spawnCommand('git', ['init'])
+        .on('close', function () {
+          self
+            .spawnCommand('git', ['add', '-A'])
+            .on('close', function () {
+              self
+                .spawnCommand('git', ['commit', '-m', '"initial commit"'])
+            })
+        })
+    }
     this.log(yosay('May the CORS be with you.'))
   }
 })
