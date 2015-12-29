@@ -2,7 +2,7 @@
 
 [![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
 
-> Scaffolds a clean and combat ready electron app.
+> Scaffolds a clean and combat ready app for the browser/electron/nodejs.
 
 ```
 your-app/
@@ -68,7 +68,7 @@ $ yo neodymium
 
 ## Contributing
 
-Make PR on the `dev` branch.
+Create a `feature-[name-of-the-feature]` branch and make PR on the `dev` branch.
 
 ## Credits
 
