@@ -1,6 +1,6 @@
 'use strict'
 const electron = require('electron')
-<% if (server){ %>
+<% if (back){ %>
 const server = require('./server/main.js')
 <% } %>
 const app = electron.app
@@ -57,7 +57,7 @@ app.on('activate', () => {
 
 app.on('ready', () => {
   mainWindow = createMainWindow()
-  <% if (server){ %>
+  <% if (back){ %>
   server.init()
   <% } %>
 })
