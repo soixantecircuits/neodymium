@@ -60,15 +60,32 @@ $ yo neodymium
 * ~~Integrate webpack~~
 * ~~Add livereload in dev mode~~
 * Make kiosk mode optionnal
-* Integrate Bootstrap css
+* Integrate Bootstrap / Foundation css
 * Integrate Vue.js
 * ~~Make electron support optionnal~~
 * Propose a Phonegap support
-* Find a way to copy just the `node_modules` the app needs
+* Find a way to copy just the `node_modules` the electron app needs
+* Write tests !
+
+## Develop
+
+It's recommended to use node `v4.2.4` LTS. I cannot guarantee previous versions support, but will sure do my best to. Please post an issue if you encounter troubles with developing on `neodymium`.
+
+```
+# Clone the repo and `cd` into it
+$ git clone git@github.com:soixantecircuits/neodymium.git && cd neodymium
+# Install the generator dependencies
+$ npm i
+# Now, create a symlink in your global `node_modules` folder.
+# (If you have previously installed neodymium via the npm package, you should run `npm remove --global generator-neodymium` before this command)
+$ npm link
+```
+
+The `yo neodymium` command will now execute your local version of neodymium. Enjoy :)
 
 ## Contributing
 
-Create a `feature-[name-of-the-feature]` branch and make PR on the `dev` branch.
+Create a `feature-[name-of-the-feature]` branch and make PR on the `dev` branch. Please use the [standard js coding style](https://github.com/feross/standard).
 
 ## Credits
 
