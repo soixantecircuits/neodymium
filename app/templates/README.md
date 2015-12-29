@@ -1,15 +1,19 @@
-# <%= appName %>
+# <%= appname %>
 
 [![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
 
-> <%= appName %> by <%= username %>
+<% if (description) { %>
+> <%= description %>
+<% } %>
 
 ## Develop
 
 #### Prerequisites
 
 * `node >= v4.0.0` ([download here](http://nodejs.org))
+<% if (front) { %>
 * `webpack` ([download here](https://github.com/webpack/webpack))
+<% } %>
 * Follow [JavaScript Standard Style](https://github.com/feross/standard) and use a [text editor plugin](https://github.com/feross/standard#text-editor-plugins)
 
 #### Install dependencies
@@ -19,6 +23,7 @@ $ npm install
 ```
 *(Yeoman should have done this for you)*
 
+<% if (front) { %>
 ##### A note about webpack
 
 We use webpack to manage dependencies loading through the app. Basically, it compiles them all into one `bundle.js` file and handle the `require([module])` stuffs. This means we **exclusively** use `npm` to manage our external dependencies.
@@ -43,15 +48,18 @@ You do:
 Finally, webpack itself is modular and you can add many [loaders](https://webpack.github.io/docs/loaders.html) to handle what you need to handle. Just `npm i --save` the ones you need.
 
 *If you find a good read about how to properly load assets with webpack, we'd really like to take a look !*
+<% } %>
 
 #### Run
-
+<% if (front) { %>
 ##### In the browser
 
 ```
 $ gulp dev
 ```
+<% } %>
 
+<% if (electron) { %>
 ##### In electron
 
 ```
@@ -63,7 +71,16 @@ And in an other shell window:
 ```
 $ npm start
 ```
+<% } %>
 
+<% if (back) { %>
+#### In node
+```
+$ npm start
+```
+<% } %>
+
+<% if (electron) { %>
 ## Build
 
 ```
@@ -79,6 +96,8 @@ $ npm run build-osx # unpackaged osx 64bits app
 $ npm run build-linux # unpackaged linux 64bits app
 $ npm run build-win # unpackaged windows 64bits app
 ```
+<% } %>
+
 ## License
 
-MIT © [<%= name %>](<%= website %>)
+MIT © <%= username %>
