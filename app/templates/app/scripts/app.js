@@ -1,4 +1,4 @@
-module.exports = function app () {
+module.exports = (function app () {
   'use strict'
 
   let self = {}
@@ -12,4 +12,4 @@ module.exports = function app () {
   }
 
   return self
-}()
+})()
