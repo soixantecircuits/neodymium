@@ -1,6 +1,8 @@
 'use strict'
 const electron = require('electron')
+<% if (server){ %>
 const server = require('./server/main.js')
+<% } %>
 const app = electron.app
 
 // report crashes to the Electron project
@@ -55,5 +57,7 @@ app.on('activate', () => {
 
 app.on('ready', () => {
   mainWindow = createMainWindow()
+  <% if (server){ %>
   server.init()
+  <% } %>
 })
