@@ -10,8 +10,7 @@ module.exports = {
       {test: /\.html/, loader: 'html-loader'},
       {test: /\.css$/, loader: 'style-loader!css-loader'},
       {test: /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/, loader: 'file-loader'},
-      {test: /\.png$/, loader: 'url-loader?limit=100000'},
-      {test: /\.jpg$/, loader: 'file-loader'},
+      {test: /\.(png|jpg)$/, loader: 'url-loader?limit=8192'},
       {test: /\.mp4$/, loader: 'file-loader'}
     ]
   },
