@@ -84,7 +84,7 @@ $ npm start
 ## Build
 
 ```
-$ webpack
+$ webpack -p # the -p flag trigger build for production. It'll minify your bundle
 $ npm run build
 ```
 
