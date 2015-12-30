@@ -35,7 +35,7 @@ function createMainWindow () {
   const win = new electron.BrowserWindow(winOptions)
 
   if (process.env['NODE_ENV'] === 'dev') {
-    win.loadURL('http://0.0.0.0:8080/')
+    win.loadURL('http://0.0.0.0:6060/')
     win.openDevTools()
   } else {
     win.loadURL('file://' + __dirname + '/dist/index.html')

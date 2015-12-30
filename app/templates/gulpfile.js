@@ -8,6 +8,8 @@ var compiler = webpack(webpackOptions)
 
 gulp.task('dev', function () {
   connect.server({
+    host: '0.0.0.0',
+    port: 6060,
     root: 'dist',
     livereload: true
   })
