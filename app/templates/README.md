@@ -48,6 +48,7 @@ You do:
 Finally, webpack itself is modular and you can add many [loaders](https://webpack.github.io/docs/loaders.html) to handle what you need to handle. Just `npm i --save` the ones you need.
 
 [This howto](https://github.com/petehunt/webpack-howto) also explains a lot of useful things.
+[This page](https://github.com/webpack/docs/wiki/shimming-modules) also.
 
 *If you find a good read about how to properly load assets with webpack, we'd really like to take a look !*
 <% } %>
