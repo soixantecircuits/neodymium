@@ -22,10 +22,10 @@
     <% } %>
   },
   "files": [
-    "index.js",
-    <% if (front) { %>
-    "app/"
+  	<% if (front) { %>
+    "app/",
     <% } %>
+    "index.js"
   ],
   "dependencies": {
     <% if (front) { %>
