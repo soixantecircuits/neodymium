@@ -19,7 +19,8 @@ module.exports = (function router () {
 
   let controllers = {}
   let views = {}
-  let past, current
+  self.past = ''
+  self.current = ''
 
   for (let i = 0; i < paths.length; i++) {
     let path = paths[i]
@@ -47,7 +48,7 @@ module.exports = (function router () {
     crossroads.addRoute('/{route}', function (route) {
     <% } %>
       // store the last route
-      past = current
+      self.past = self.current
       // destroy current controller
       if (self.past) {
         controllers[self.past].destroy()
@@ -58,16 +59,16 @@ module.exports = (function router () {
       setBodyClass(route)
       // init route controller
       <% if (stateMachine) { %>
-      controllers[route].init()
-      <% } else { %>
       controllers[route].init(state, id)
       // listen to state changes
       controllers[route].changedState.add((state) => {
         setHashSilently(route + '/' + state)
       })
+      <% } else { %>
+      controllers[route].init()
       <% } %>
       // store current route
-      current = route
+      self.current = route
     })
 
     hasher.initialized.add(parseHash)
@@ -76,7 +77,7 @@ module.exports = (function router () {
   }
 
   function setBodyClass (route) {
-    document.body.classList.remove(past + '-view')
+    document.body.classList.remove(self.past + '-view')
     document.body.classList.add(route + '-view')
   }
 
