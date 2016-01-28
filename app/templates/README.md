@@ -12,7 +12,7 @@
 
 * `node >= v4.0.0` ([download here](http://nodejs.org))
 <% if (front) { %>
-* `webpack` ([download here](https://github.com/webpack/webpack))
+* `webpack` ([download here](https://github.com/webpack/webpack)) (install `npm install webpack -g`)
 <% } %>
 * Follow [JavaScript Standard Style](https://github.com/feross/standard) and use a [text editor plugin](https://github.com/feross/standard#text-editor-plugins)
 
