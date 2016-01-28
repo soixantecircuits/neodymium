@@ -1,6 +1,6 @@
 {
   "name": "generator-neodymium",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "Scaffolds a clean and combat ready electron app.",
   "license": "MIT",
   "repository": "soixantecircuits/neodymium",
