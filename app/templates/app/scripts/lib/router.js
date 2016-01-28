@@ -23,11 +23,20 @@ module.exports = (function router () {
 
   self.init = function init () {
     crossroads.bypassed.add(function (request) {
+      <% if (stateMachine) { %>
+      crossroads.parse('home/start')
+      setHashSilently('home/start')
+      <% } else { %>
       crossroads.parse('home')
       setHashSilently('home')
+      <% } %>
     })
 
+    <% if (stateMachine) { %>
+    crossroads.addRoute('/{route}/{state}/:id:', function (route, state, id) {
+    <% } else { %>
     crossroads.addRoute('/{route}', function (route) {
+    <% } %>
       // store the last route
       past = current
       // destroy current controller
@@ -39,7 +48,15 @@ module.exports = (function router () {
       // add a class `route` to the body
       setBodyClass(route)
       // init route controller
+      <% if (stateMachine) { %>
       controllers[route].init()
+      <% } else { %>
+      controllers[route].init(state, id)
+      // listen to state changes
+      controllers[route].changedState.add((state) => {
+        setHashSilently(route + '/' + state)
+      })
+      <% } %>
       // store current route
       current = route
     })
