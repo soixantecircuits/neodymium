@@ -22,10 +22,10 @@
     <% } %>
   },
   "files": [
-    "index.js",
-    <% if (front) { %>
-    "app/"
+  	<% if (front) { %>
+    "app/",
     <% } %>
+    "index.js"
   ],
   "dependencies": {
     <% if (front) { %>
@@ -34,6 +34,9 @@
     "electron-debug": "^0.5.0",
     <% } %>
     "hasher": "^1.2.0",
+    <% if (stateMachine) { %>
+    "machina": "^1.1.2",
+    <% } %>
     "signals": "^1.0.0"
     <% } %>
   },
@@ -47,11 +50,14 @@
     "electron-packager": "^5.0.0",
     "electron-prebuilt": "^0.35.0",
     <% } %>
+    "exports-loader": "^0.6.2",
     "file-loader": "^0.8.5",
     "gulp": "^3.9.0",
     "gulp-connect": "^2.2.0",
     "html-loader": "^0.4.0",
+    "imports-loader": "^0.6.5",
     "json-loader": "^0.5.4",
+    "script-loader": "^0.6.1",
     "style-loader": "^0.13.0",
     "url-loader": "^0.5.7",
     "webpack": "^1.12.9"

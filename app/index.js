@@ -55,6 +55,15 @@ module.exports = generators.Base.extend({
         default: true
       },
       {
+        name: 'stateMachine',
+        message: 'Will you need state machine router support (whatever lib you use)?',
+        type: 'confirm',
+        default: true,
+        when: function (answers) {
+          return answers.front
+        }
+      },
+      {
         name: 'electron',
         message: 'Will you need electron support?',
         type: 'confirm',
@@ -87,6 +96,7 @@ module.exports = generators.Base.extend({
       this.username = answers.username
       this.git = answers.git
       this.front = answers.front
+      this.stateMachine = answers.stateMachine
       this.electron = answers.electron
       this.electronVersion = answers.electronVersion
       this.back = answers.back
@@ -101,6 +111,7 @@ module.exports = generators.Base.extend({
       username: this.username,
       git: this.git,
       front: this.front,
+      stateMachine: this.stateMachine,
       electron: this.electron,
       electronVersion: this.electronVersion,
       back: this.back

@@ -1,6 +1,6 @@
 # <%= appname %>
 
-[![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 
 <% if (description) { %>
 > <%= description %>
@@ -43,9 +43,12 @@ You do:
 
 ```
 
-*the css loader will do this for you, so you can just load your assets with `url(../my/image.png)`, just use its absolute path.*
+*the css loader will do this for you, so you can just load your assets with `background: url(../my/image.png);` for example. Just use its absolute path.*
 
 Finally, webpack itself is modular and you can add many [loaders](https://webpack.github.io/docs/loaders.html) to handle what you need to handle. Just `npm i --save` the ones you need.
+
+[This howto](https://github.com/petehunt/webpack-howto) also explains a lot of useful things.
+[This page](https://github.com/webpack/docs/wiki/shimming-modules) also.
 
 *If you find a good read about how to properly load assets with webpack, we'd really like to take a look !*
 <% } %>
@@ -84,7 +87,7 @@ $ npm start
 ## Build
 
 ```
-$ webpack
+$ webpack -p # the -p flag trigger build for production. It'll minify your bundle
 $ npm run build
 ```
 
