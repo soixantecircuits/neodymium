@@ -1,3 +1,8 @@
 <h2>Home view</h2>
+<% if (stateMachine) { %>
+<a href="#/page-1/start">Go to page 1</a>
+<a href="#/page-2/start">Go to page 2</a>
+<% } else { %>
 <a href="#/page-1">Go to page 1</a>
 <a href="#/page-2">Go to page 2</a>
+<% } %>
