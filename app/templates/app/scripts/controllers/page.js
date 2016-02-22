@@ -12,11 +12,11 @@ module.exports = (function page () {
   ctrl.init = function init () {
   <% } %>
     console.log('page.js - init page controller.')
-  }
+    <% if (stateMachine) { %>
 
-  <% if (stateMachine) { %>
-  ctrl.changedState = new signals.Signal() // now trigger `ctrl.changedState.dispatch(state)` when your state changes to notify the router
-  <% } %>
+    ctrl.changedState = new signals.Signal() // now trigger `ctrl.changedState.dispatch(state)` when your state changes to notify the router
+    <% } %>
+  }
 
   ctrl.destroy = function destroy () {
     ctrl = {}
