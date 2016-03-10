@@ -17,6 +17,6 @@ module.exports = {
     ]
   },
   <% if (electron) { %>
-  target: 'atom'
+  target: 'electron'
   <% } %>
 }
