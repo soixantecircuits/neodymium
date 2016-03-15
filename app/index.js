@@ -8,7 +8,8 @@ const cheers = [
   'Roses are red and your code is rad.',
   "You can't touch this. Toum toumtoum toum ... toum toum ... toum toum. You can't touch this.",
   "If you don't find love, love will find you.",
-  'Have a nice code session :)'
+  'Have a nice code session :)',
+  'They see you codin\' they hatin\'.'
 ]
 
 module.exports = generators.Base.extend({
