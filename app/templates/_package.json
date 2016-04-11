@@ -20,6 +20,7 @@
     <% } else if (back) { %>
     "start": "export NODE_ENV='dev'; node index.js"
     <% } %>
+    "test": "standard"
   },
   "files": [
   	<% if (front) { %>
@@ -41,6 +42,7 @@
     <% } %>
   },
   "devDependencies": {
+    "standard": "^3.0.0"
     <% if (front) { %>
     "babel-core": "^6.2.1",
     "babel-loader": "^6.2.0",
