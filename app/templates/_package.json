@@ -13,10 +13,11 @@
   "scripts": {
     <% if (electron) { %>
     "start": "export NODE_ENV='dev'; electron .",
+    "start-win": "set NODE_ENV=DEV&&electron .",
     "build": "export NODE_ENV='production'; electron-packager . $npm_package_name --out=bin --ignore='^/bin$' --prune --asar --all --version=$npm_package_electronVersion --overwrite",
     "build-osx": "export NODE_ENV='production'; electron-packager . $npm_package_name --out=bin --platform=darwin --arch=x64 --ignore='^/bin$' --prune --version=$npm_package_electronVersion --overwrite",
     "build-linux": "export NODE_ENV='production'; electron-packager . $npm_package_name --out=bin --platform=linux --arch=x64 --ignore='^/bin$' --prune --version=$npm_package_electronVersion --overwrite",
-    "build-win": "export NODE_ENV='production'; electron-packager . $npm_package_name --out=bin --platform=win --arch=x64 --ignore='^/bin$' --prune --version=$npm_package_electronVersion --overwrite"
+    "build-win": "set NODE_ENV=production&&electron-packager . $npm_package_name --out=bin --platform=win --arch=x64 --ignore='^/bin$' --prune --version=$npm_package_electronVersion --overwrite"
     <% } else if (back) { %>
     "start": "export NODE_ENV='dev'; node index.js"
     <% } %>
