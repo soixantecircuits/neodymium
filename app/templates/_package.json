@@ -1,6 +1,6 @@
 {
   "name": "<%= appname %>",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "<%= description %>",
   "license": "MIT",
   "repository": "<%= username %>/<%= appname %>",
@@ -11,15 +11,25 @@
   "electronVersion": "<%= electronVersion %>",
   <% } %>
   "scripts": {
+    "postinstall": "echo $npm_package_version > $npm_package_name.version
+                    && git commit -am \"Add version number\" && cp -n config.sample.js config.js",
     <% if (electron) { %>
     "start": "export NODE_ENV='dev'; electron .",
-    "build": "export NODE_ENV='production'; electron-packager . $npm_package_name --out=bin --ignore='^/bin$' --prune --asar --all --version=$npm_package_electronVersion --overwrite",
-    "build-osx": "export NODE_ENV='production'; electron-packager . $npm_package_name --out=bin --platform=darwin --arch=x64 --ignore='^/bin$' --prune --version=$npm_package_electronVersion --overwrite",
-    "build-linux": "export NODE_ENV='production'; electron-packager . $npm_package_name --out=bin --platform=linux --arch=x64 --ignore='^/bin$' --prune --version=$npm_package_electronVersion --overwrite",
-    "build-win": "export NODE_ENV='production'; electron-packager . $npm_package_name --out=bin --platform=win --arch=x64 --ignore='^/bin$' --prune --version=$npm_package_electronVersion --overwrite"
+    "start-win": "set NODE_ENV=dev&&electron .",
+    "build-osx": "export NODE_ENV='production'
+                  && electron-packager . $npm_package_name --out=bin --platform=darwin --arch=x64 --ignore='^/bin$' --prune --version=$npm_package_electronVersion --overwrite
+                  && cp $npm_package_name.version ./bin/$npm_package_name-$npm_package_version-darwin-x64/",
+    "build-linux": "export NODE_ENV='production'
+                    && electron-packager . $npm_package_name --out=bin --platform=linux --arch=x64 --ignore='^/bin$' --prune --version=$npm_package_electronVersion --overwrite
+                    && cp $npm_package_name.version ./bin/$npm_package_name-$npm_package_version-linux-x64/",
+    "build-win": "set NODE_ENV='production'
+                  &&electron-packager . %npm_package_name% --out=bin --platform=win32 --arch=x64 --ignore='^/bin$' --prune --version=%npm_package_electronVersion% --overwrite
+                  &&cp $npm_package_name.version ./bin/$npm_package_name-$npm_package_version-win-x64/",
     <% } else if (back) { %>
     "start": "export NODE_ENV='dev'; node index.js"
     <% } %>
+    "test": "standard",
+    "postversion": "echo $npm_package_version > $npm_package_name.version && git commit -am \"Increment version number\""
   },
   "files": [
   	<% if (front) { %>
@@ -41,6 +51,7 @@
     <% } %>
   },
   "devDependencies": {
+    "standard": "^3.0.0",
     <% if (front) { %>
     "babel-core": "^6.2.1",
     "babel-loader": "^6.2.0",
@@ -48,7 +59,7 @@
     "css-loader": "^0.23.0",
     <% if (electron) { %>
     "electron-packager": "^5.0.0",
-    "electron-prebuilt": "^0.35.0",
+    "electron-prebuilt": "^0.37.0",
     <% } %>
     "exports-loader": "^0.6.2",
     "file-loader": "^0.8.5",
