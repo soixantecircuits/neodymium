@@ -13,6 +13,9 @@ require('electron-debug')()
 
 // add some command line arguments
 app.commandLine.appendArgument('--disable-pinch')
+app.commandLine.appendArgument('--overscroll-history-navigation=0')
+app.commandLine.appendArgument('--ignore-gpu-blacklist')
+app.commandLine.appendSwitch('remote-debugging-port', '8315');
 
 // prevent window being garbage collected
 let mainWindow
