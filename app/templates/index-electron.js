@@ -32,6 +32,15 @@ function createMainWindow () {
     winOptions.fullScreen = true
     winOptions.alwaysOnTop = true
   }
+  winOptions.webPreferences = {
+    webSecurity: false,
+    allowDisplayingInsecureContent: true,
+    allowRunningInsecureContent: true,
+    plugins: true,
+    experimentalFeatures: false,
+    experimentalCanvasFeatures: false,
+    directWrite: true
+  }
   const win = new electron.BrowserWindow(winOptions)
 
   if (process.env['NODE_ENV'] === 'dev') {
