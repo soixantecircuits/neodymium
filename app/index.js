@@ -160,7 +160,7 @@ module.exports = generators.Base.extend({
             .spawnCommand('git', ['add', '-A'])
             .on('close', function () {
               self
-                .spawnCommand('git', ['commit', '-m', '"initial commit"'])
+                .spawnCommand('git', ['commit', '-m', 'initial commit'])
             })
         })
     }
