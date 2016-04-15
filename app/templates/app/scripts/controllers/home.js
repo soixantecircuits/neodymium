@@ -19,7 +19,6 @@ module.exports = (function home () {
   }
 
   ctrl.destroy = function destroy () {
-    ctrl = {}
   }
 
   return ctrl
