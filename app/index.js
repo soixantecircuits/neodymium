@@ -120,7 +120,6 @@ module.exports = generators.Base.extend({
     /*
      * A bug (either in the `yeoman-generator` or the `mem-fs-editor` module) crash the generator
      * if you copy without providing a parameter to the destinationPath() method.
-     * Got no time (nor internet connection, actually in a train right now) to check on this, but will do.
     */
 
     this.fs.copyTpl(this.templatePath('LICENSE'), this.destinationPath('LICENSE'), config)
@@ -160,7 +159,7 @@ module.exports = generators.Base.extend({
             .spawnCommand('git', ['add', '-A'])
             .on('close', function () {
               self
-                .spawnCommand('git', ['commit', '-m', '"initial commit"'])
+                .spawnCommand('git', ['commit', '-m', 'initial commit'])
             })
         })
     }

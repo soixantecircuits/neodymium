@@ -32,21 +32,16 @@ module.exports = (function router () {
   }
 
   self.init = function init () {
-    crossroads.bypassed.add(function (request) {
-      <% if (stateMachine) { %>
+    crossroads.bypassed.add(function (request) {<% if (stateMachine) { %>
       crossroads.parse('home/start')
-      setHashSilently('home/start')
-      <% } else { %>
+      setHashSilently('home/start')<% } else { %>
       crossroads.parse('home')
-      setHashSilently('home')
-      <% } %>
-    })
+      setHashSilently('home')<% } %>
+    })<% if (stateMachine) { %>
 
-    <% if (stateMachine) { %>
-    crossroads.addRoute('/{route}/{state}/:id:', function (route, state, id) {
-    <% } else { %>
-    crossroads.addRoute('/{route}', function (route) {
-    <% } %>
+    crossroads.addRoute('/{route}/{state}/:id:', function (route, state, id) {<% } else { %>
+
+    crossroads.addRoute('/{route}', function (route) {<% } %>
       // store the last route
       self.past = self.current
       // destroy current controller
@@ -57,16 +52,13 @@ module.exports = (function router () {
       setView(views[route])
       // add a class `route` to the body
       setBodyClass(route)
-      // init route controller
-      <% if (stateMachine) { %>
+      // init route controller<% if (stateMachine) { %>
       controllers[route].init(state, id)
       // listen to state changes
       controllers[route].changedState.add((state) => {
         setHashSilently(route + '/' + state)
-      })
-      <% } else { %>
-      controllers[route].init()
-      <% } %>
+      })<% } else { %>
+      controllers[route].init()<% } %>
       // store current route
       self.current = route
     })
