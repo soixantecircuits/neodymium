@@ -56,8 +56,6 @@ app.on('activate', () => {
 })
 
 app.on('ready', () => {
-  mainWindow = createMainWindow()
-  <% if (back){ %>
-  server.init()
-  <% } %>
+  mainWindow = createMainWindow()<% if (back){ %>
+  server.init()<% } %>
 })
