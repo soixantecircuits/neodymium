@@ -83,8 +83,8 @@ module.exports = generators.Base.extend({
         }
       },
       {
-        name: 'back',
-        message: 'Will you need a back-end?',
+        name: 'native',
+        message: 'Will you need native OS API support?',
         type: 'confirm',
         default: true
       }
@@ -99,7 +99,7 @@ module.exports = generators.Base.extend({
       this.stateMachine = answers.stateMachine
       this.electron = answers.electron
       this.electronVersion = answers.electronVersion
-      this.back = answers.back
+      this.native = answers.native
       done()
     }.bind(this))
   },
@@ -114,7 +114,7 @@ module.exports = generators.Base.extend({
       stateMachine: this.stateMachine,
       electron: this.electron,
       electronVersion: this.electronVersion,
-      back: this.back
+      native: this.native
     }
 
     /*
@@ -138,7 +138,7 @@ module.exports = generators.Base.extend({
     if (this.electron) {
       this.fs.copyTpl(this.templatePath('index-electron.js'), this.destinationPath('index.js'), config)
     }
-    if (this.back) {
+    if (this.native) {
       this.fs.copyTpl(this.templatePath('server'), this.destinationPath('server'), config)
       if (!this.electron) {
         this.fs.copyTpl(this.templatePath('index-server.js'), this.destinationPath('index.js'), config)
@@ -160,7 +160,9 @@ module.exports = generators.Base.extend({
             })
         })
     }
-    this.npmInstall()
+    if (this.front || this.native) {
+      this.npmInstall()
+    }
   },
   end: function () {
     this.log(yosay('May the CORS be with you.'))
