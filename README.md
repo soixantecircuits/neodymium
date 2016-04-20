@@ -58,22 +58,9 @@ With [yo](https://github.com/yeoman/yo):
 $ yo neodymium
 ```
 
-## To do
-
-* ~~Integrate webpack~~
-* ~~Add livereload in dev mode~~
-* Make kiosk mode optionnal
-* Integrate Bootstrap / Foundation css
-* Integrate Vue.js
-* ~~Make electron support optionnal~~
-* Propose a Phonegap support
-* Find a way to copy just the `node_modules` the electron app needs
-* Write tests !
-* Clean up files after because ejs leaves empty lines
-
 ## Develop
 
-It's recommended to use node `v4.2.4` LTS. I cannot guarantee previous versions support, but will sure do my best to. Please post an issue if you encounter troubles with developing on `neodymium`.
+It's recommended to use node `v4.2.4` LTS. We cannot guarantee previous versions support, but will sure do our best to. Please post an issue if you encounter troubles with developing on `neodymium`.
 
 ```
 # Clone the repo and `cd` into it
