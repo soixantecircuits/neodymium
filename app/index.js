@@ -84,7 +84,7 @@ module.exports = generators.Base.extend({
       },
       {
         name: 'back',
-        message: 'Will you need a back-end?',
+        message: 'Will you need native OS API support?',
         type: 'confirm',
         default: true
       }
