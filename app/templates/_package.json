@@ -9,13 +9,15 @@
   },<% if (electron) { %>
   "electronVersion": "<%= electronVersion %>",<% } %>
   "scripts": {
-    "postinstall": "echo $npm_package_version > $npm_package_name.version && git add $npm_package_name.version && git commit -m \"Add version number\"",<% if (electron) { %>
+    "postinstall": "echo $npm_package_version > $npm_package_name.version<% if (git) { %> && git add $npm_package_name.version && git commit -m \"Add version number\"<% } %>",<% if (electron) { %>
     "start": "export NODE_ENV='dev'; electron .",
     "start-win": "set NODE_ENV=dev&&electron .",
     "build-osx": "export NODE_ENV='production' && electron-packager . $npm_package_name --out=bin --platform=darwin --arch=x64 --ignore='^/bin$' --prune --version=$npm_package_electronVersion --overwrite && cp $npm_package_name.version ./bin/$npm_package_name-$npm_package_version-darwin-x64/",
     "build-linux": "export NODE_ENV='production' && electron-packager . $npm_package_name --out=bin --platform=linux --arch=x64 --ignore='^/bin$' --prune --version=$npm_package_electronVersion --overwrite && cp $npm_package_name.version ./bin/$npm_package_name-$npm_package_version-linux-x64/",
-    "build-win": "set NODE_ENV='production'&&electron-packager . %npm_package_name% --out=bin --platform=win32 --arch=x64 --ignore='^/bin$' --prune --version=%npm_package_electronVersion% --overwrite&&cp $npm_package_name.version ./bin/$npm_package_name-$npm_package_version-win-x64/",<% } else if (back) {%>
-    "start": "export NODE_ENV='dev'; node index.js"<% }%>
+    "build-win": "set NODE_ENV='production'&&electron-packager . %npm_package_name% --out=bin --platform=win32 --arch=x64 --ignore='^/bin$' --prune --version=%npm_package_electronVersion% --overwrite&&cp $npm_package_name.version ./bin/$npm_package_name-$npm_package_version-win-x64/",<% } else if (native) {%>
+    "start": "export NODE_ENV='dev'; node index.js",
+    "start-win": "set NODE_ENV=dev&&node index.js",<% } else {%>
+    "start": "echo \"You have no file to execute here.\"",<% } %>
     "test": "standard",
     "postversion": "echo $npm_package_version > $npm_package_name.version && git commit -am \"Increment version number\""
   },
