@@ -32,6 +32,7 @@ your-app/
 │   │   │   ├── home.js
 │   │   │   └── page.js
 │   │   └── lib
+|   |       |   # Here comes the app specific modules like routing, translations, storage, etc...
 │   │       └── router.js
 │   └── styles
 │       └── main.css
