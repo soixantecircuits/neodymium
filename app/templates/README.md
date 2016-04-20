@@ -61,7 +61,7 @@ And in an other shell window:
 $ npm start
 # For Windows users :
 $ npm start-win
-```<% } %><% if (back) { %>
+```<% } %><% if (native) { %>
 
 #### In node
 ```

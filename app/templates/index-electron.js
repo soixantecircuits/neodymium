@@ -1,6 +1,6 @@
 'use strict'
 const electron = require('electron')
-<% if (back){ %>
+<% if (native){ %>
 const server = require('./server/main.js')
 <% } %>
 const app = electron.app
@@ -68,6 +68,6 @@ app.on('activate', () => {
 })
 
 app.on('ready', () => {
-  mainWindow = createMainWindow()<% if (back){ %>
+  mainWindow = createMainWindow()<% if (native){ %>
   server.init()<% } %>
 })
