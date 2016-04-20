@@ -147,9 +147,6 @@ module.exports = generators.Base.extend({
   },
   conflicts: function () {},
   install: function () {
-    this.npmInstall()
-  },
-  end: function () {
     if (this.git) {
       let self = this
       self
@@ -163,6 +160,9 @@ module.exports = generators.Base.extend({
             })
         })
     }
+    this.npmInstall()
+  },
+  end: function () {
     this.log(yosay('May the CORS be with you.'))
   }
 })
