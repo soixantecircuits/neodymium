@@ -76,7 +76,9 @@ The `yo neodymium` command will now execute your local version of neodymium. Enj
 
 ## Contributing
 
-Create a `feature-[name-of-the-feature]` branch and make PR on the `dev` branch. Please use the [standard js coding style](https://github.com/feross/standard).
+We follow [a successful git branching model](http://nvie.com/posts/a-successful-git-branching-model/).
+
+Please use the [standard js coding style](https://github.com/feross/standard).
 
 ## Credits
 
