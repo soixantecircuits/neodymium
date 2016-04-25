@@ -1,8 +1,7 @@
 # <%= appname %>
 
-[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)<% if (description) { %>
 
-<% if (description) { %>
 > <%= description %>
 <% } %>
 
@@ -10,11 +9,16 @@
 
 #### Prerequisites
 
-* `node >= v4.0.0` ([download here](http://nodejs.org))
-<% if (front) { %>
-* `webpack` ([download here](https://github.com/webpack/webpack)) (install `npm install webpack -g`)
-<% } %>
+* `node >= v4.0.0` ([use nvm](https://github.com/creationix/nvm))<% if (front) { %>
+* `webpack` ([download here](https://github.com/webpack/webpack)) (install `npm install webpack -g`)<% } %>
 * Follow [JavaScript Standard Style](https://github.com/feross/standard) and use a [text editor plugin](https://github.com/feross/standard#text-editor-plugins)
+
+#### Stack
+
+- [Neodymium](https://github.com/soixantecircuits/neodymium) with front-end, electron, FSM and native API support. Some work will have to be done on the router.<% if (stateMachine) { %>
+- [machina.js](https://github.com/ifandelse/machina.js) as a FSM library.<% } %>
+- Some of [the libs we use](https://github.com/soixantecircuits/awesome-app-js).
+- We use [standard](https://github.com/feross/standard) coding style and now you do too 😉.
 
 #### Install dependencies
 
@@ -23,46 +27,28 @@ $ npm install
 ```
 *(Yeoman should have done this for you)*
 
-<% if (front) { %>
-##### A note about webpack
+#### Workflow
 
-We use webpack to manage dependencies loading through the app. Basically, it compiles them all into one `bundle.js` file and handle the `require([module])` stuffs. This means we **exclusively** use `npm` to manage our external dependencies.
+We follow [a successful git branching model](http://nvie.com/posts/a-successful-git-branching-model/).
 
-Webpack does not only manage `js` modules, but also `css` stylesheets and all the app assets (images, videos, `json` datas, ...). It can be a bit confusing at first to load your stylesheets with a `require('../styles/main.css')` (cf. [entry script](src/entry.js)) instead of a good old `<link>` tag, but it keeps the workflow clean. This also mean we load assets in `js`.
-
-Instead of doing:
-```html
-<img src="assets/my-img.png" />
-```
-You do:
-```html
-<img class="img-selector" />
-```
-```js
-  document.querySelector('img-selector').src = require('../assets/my-img.png')
+We also version our apps, following [semver](http://semver.org/). You pass a version when merging `dev` into `master`. Obviously, you'll update version number and tags in the `master` branch.
+To do so, [npm is here](https://docs.npmjs.com/cli/version) to help you out. **Make sure your `git` working directory is clean**.
 
 ```
+$ npm version major|minor|patch
+```
 
-*the css loader will do this for you, so you can just load your assets with `background: url(../my/image.png);` for example. Just use its absolute path.*
+You can also run `$ npm test` before you commit to make sure you don't give anyone a good reason to blame you.
 
-Finally, webpack itself is modular and you can add many [loaders](https://webpack.github.io/docs/loaders.html) to handle what you need to handle. Just `npm i --save` the ones you need.
+#### Run<% if (front) { %>
 
-[This howto](https://github.com/petehunt/webpack-howto) also explains a lot of useful things.
-[This page](https://github.com/webpack/docs/wiki/shimming-modules) also.
-
-*If you find a good read about how to properly load assets with webpack, we'd really like to take a look !*
-<% } %>
-
-#### Run
-<% if (front) { %>
 ##### In the browser
 
 ```
 $ gulp dev
 ```
-<% } %>
+And then rendez-vous at `http://127.0.0.1:6060`.<% } %><% if (electron) { %>
 
-<% if (electron) { %>
 ##### In electron
 
 ```
@@ -73,33 +59,32 @@ And in an other shell window:
 
 ```
 $ npm start
-```
-<% } %>
+# For Windows users :
+$ npm start-win
+```<% } %><% if (native) { %>
 
-<% if (back) { %>
 #### In node
 ```
 $ npm start
-```
-<% } %>
+```<% } %><% if (electron) { %>
 
-<% if (electron) { %>
 ## Build
 
-```
-$ webpack -p # the -p flag trigger build for production. It'll minify your bundle
-$ npm run build
-```
+We use [electron-packager](https://github.com/maxogden/electron-packager).
 
-Builds the app for OS X, Linux, and Windows, using [electron-packager](https://github.com/maxogden/electron-packager). It will result in an [asar packaged](https://github.com/atom/electron/blob/master/docs/tutorial/application-packaging.md) app.
+```
+$ webpack
+$ npm run build-osx # osx 64bits app
+$ npm run build-linux # linux 64bits app
+$ npm run build-win # windows 64bits app
+```<% } %>
 
-We also provides more developer friendly build scripts:
-```
-$ npm run build-osx # unpackaged osx 64bits app
-$ npm run build-linux # unpackaged linux 64bits app
-$ npm run build-win # unpackaged windows 64bits app
-```
-<% } %>
+## Troubleshooting<% if (front) { %>
+
+#### Webpack
+
+- [This howto](https://github.com/petehunt/webpack-howto) also explains a lot of useful things.
+- [This page](https://github.com/webpack/docs/wiki/shimming-modules) too.<% } %>
 
 ## License
 

@@ -1,6 +1,6 @@
 'use strict'
 const electron = require('electron')
-<% if (back){ %>
+<% if (native){ %>
 const server = require('./server/main.js')
 <% } %>
 const app = electron.app
@@ -13,6 +13,9 @@ require('electron-debug')()
 
 // add some command line arguments
 app.commandLine.appendArgument('--disable-pinch')
+app.commandLine.appendArgument('--overscroll-history-navigation=0')
+app.commandLine.appendArgument('--ignore-gpu-blacklist')
+app.commandLine.appendSwitch('remote-debugging-port', '8315');
 
 // prevent window being garbage collected
 let mainWindow
@@ -31,6 +34,15 @@ function createMainWindow () {
     winOptions.resizable = false
     winOptions.fullScreen = true
     winOptions.alwaysOnTop = true
+  }
+  winOptions.webPreferences = {
+    webSecurity: false,
+    allowDisplayingInsecureContent: true,
+    allowRunningInsecureContent: true,
+    plugins: true,
+    experimentalFeatures: false,
+    experimentalCanvasFeatures: false,
+    directWrite: true
   }
   const win = new electron.BrowserWindow(winOptions)
 
@@ -56,8 +68,6 @@ app.on('activate', () => {
 })
 
 app.on('ready', () => {
-  mainWindow = createMainWindow()
-  <% if (back){ %>
-  server.init()
-  <% } %>
+  mainWindow = createMainWindow()<% if (native){ %>
+  server.init()<% } %>
 })

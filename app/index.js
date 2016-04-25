@@ -84,8 +84,8 @@ module.exports = generators.Base.extend({
         }
       },
       {
-        name: 'back',
-        message: 'Will you need a back-end?',
+        name: 'native',
+        message: 'Will you need native OS API support?',
         type: 'confirm',
         default: true
       }
@@ -100,7 +100,7 @@ module.exports = generators.Base.extend({
       this.stateMachine = answers.stateMachine
       this.electron = answers.electron
       this.electronVersion = answers.electronVersion
-      this.back = answers.back
+      this.native = answers.native
       done()
     }.bind(this))
   },
@@ -115,13 +115,12 @@ module.exports = generators.Base.extend({
       stateMachine: this.stateMachine,
       electron: this.electron,
       electronVersion: this.electronVersion,
-      back: this.back
+      native: this.native
     }
 
     /*
      * A bug (either in the `yeoman-generator` or the `mem-fs-editor` module) crash the generator
      * if you copy without providing a parameter to the destinationPath() method.
-     * Got no time (nor internet connection, actually in a train right now) to check on this, but will do.
     */
 
     this.fs.copyTpl(this.templatePath('LICENSE'), this.destinationPath('LICENSE'), config)
@@ -140,7 +139,7 @@ module.exports = generators.Base.extend({
     if (this.electron) {
       this.fs.copyTpl(this.templatePath('index-electron.js'), this.destinationPath('index.js'), config)
     }
-    if (this.back) {
+    if (this.native) {
       this.fs.copyTpl(this.templatePath('server'), this.destinationPath('server'), config)
       if (!this.electron) {
         this.fs.copyTpl(this.templatePath('index-server.js'), this.destinationPath('index.js'), config)
@@ -149,9 +148,6 @@ module.exports = generators.Base.extend({
   },
   conflicts: function () {},
   install: function () {
-    this.npmInstall()
-  },
-  end: function () {
     if (this.git) {
       let self = this
       self
@@ -161,10 +157,15 @@ module.exports = generators.Base.extend({
             .spawnCommand('git', ['add', '-A'])
             .on('close', function () {
               self
-                .spawnCommand('git', ['commit', '-m', '"initial commit"'])
+                .spawnCommand('git', ['commit', '-m', 'initial commit'])
             })
         })
     }
+    if (this.front || this.native) {
+      this.npmInstall()
+    }
+  },
+  end: function () {
     this.log(yosay('May the CORS be with you.'))
   }
 })

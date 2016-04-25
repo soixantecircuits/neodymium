@@ -1,8 +1,11 @@
+'use strict'
+let webpack = require('webpack')
+let path = require('path')
+
 module.exports = {
   entry: './app/entry.js',
   output: {
-    path: __dirname + '/dist',
-    publicPath: 'http://0.0.0.0:6060/',
+    path: path.join(__dirname, '/dist'),
     filename: 'bundle.js'
   },
   devtool: 'source-map',
@@ -13,10 +16,10 @@ module.exports = {
       {test: /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/, loader: 'file-loader'},
       {test: /\.(png|jpg)$/, loader: 'url-loader?limit=8192'},
       {test: /\.mp4$/, loader: 'file-loader'},
-      {test: /\.js$/, exclude: /(node_modules)/, loader: 'babel', query: {presets: ['es2015']}}
+      {test: /\.js$/, exclude: /(node_modules)/, loader: 'babel', query: {presets: ['es2015']}},
+      {test: /\.json$/, loader: 'json-loader'}
     ]
-  },
-  <% if (electron) { %>
-  target: 'atom'
-  <% } %>
+  },<% if (electron) { %>
+  plugins: [ new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"development"' }) ],
+  target: 'electron'<% } %>
 }
