@@ -23,9 +23,9 @@ module.exports = (function router () {
   let views = {}
   self.past = ''
   self.current = ''
-  self.transitionning = false
   self.queue = null
-
+  self.transitionTimeout = false
+  self.transitionTimeoutDelay = 20000
   for (let i = 0; i < paths.length; i++) {
     let path = paths[i]
     for (let j = 0; j < path.routes.length; j++) {
@@ -61,7 +61,8 @@ module.exports = (function router () {
     events.transition.on('transition-in-end', self, function (route) {
       // Remove content from #main-new
       removeOldView()
-      this.transitionning = false
+      clearTimeout(this.transitionTimeout)
+      this.transitionTimeout = false
       if (this.queue) {
         handleQueue()
       }
@@ -79,18 +80,20 @@ module.exports = (function router () {
         setHashSilently(route + '/' + toState)
       }) <% } else { %>
       controllers[toRoute].init(toRoute)<% } %>
-      // Launch transition in 
-      controllers[toRoute].transitionIn(toRoute)
     })
   }
 
   <% if (stateMachine) { %>
-  function handleRoute (route) {<% } else { %>
-  function handleRoute(route, state, id) {<% } %>
-    // console.log('link hitted')
-
+  function handleRoute (route, state, id) {<% } else { %>
+  function handleRoute (route) {<% } %>
     if (self.transitionning === true) {
       self.queue = route
+      self.transitionTimeout = setTimeout(function () {
+        self.transitionning = false
+        <% if (stateMachine) { %>
+        handleRoute(route, state, id)<% } else { %>
+        handleRoute(route)<% } %>
+      }, self.transitionTimeoutDelay)
       return
     }
     self.transitionning = true
@@ -138,13 +141,13 @@ module.exports = (function router () {
     document.querySelector('#main-new').innerHTML = view
     translator.localizeContent()
   }
+
   function removeOldView () {
     var oldContainer = document.querySelector('#main')
     var newContainer = document.querySelector('#main-new')
     oldContainer.id = 'main-new'
     newContainer.id = 'main'
-
-    oldContainer.innerHTML = '';
+    oldContainer.innerHTML = ''
   }
 
   return self

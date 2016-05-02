@@ -6,12 +6,14 @@ module.exports = (function home () {
   let ctrl = {}<% if (stateMachine) { %>
   const signals = require('signals')<% } %><% if (stateMachine) { %>
 
-  ctrl.init = function init (state, id) {<% } else { %>
+  ctrl.init = function init (toRoute, state, id) {<% } else { %>
 
-  ctrl.init = function init () {<% } %>
+  ctrl.init = function init (toRoute) {<% } %>
     console.log('home.js - init home controller.')<% if (stateMachine) { %>
 
     ctrl.changedState = new signals.Signal() // now trigger `ctrl.changedState.dispatch(state)` when your state changes to notify the router<% } %>
+    // Launch transition In
+    ctrl.transitionIn(toRoute)
   }
 
   ctrl.transitionIn = function transitionIn (route) {
@@ -23,7 +25,7 @@ module.exports = (function home () {
   } <% } else { %>
   ctrl.transitionOut = function transitionOut (fromRoute, toRoute) {
     events.transition.dispatch('transition-out-end', fromRoute)
-  } <% } %>
+  } <% } %>
 
   ctrl.destroy = function destroy () {
   }
