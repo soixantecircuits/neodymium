@@ -142,7 +142,6 @@ module.exports = (function router () {
 
   function addView (view) {
     document.querySelector('#main-new').innerHTML = view
-    translator.localizeContent()
   }
 
   function removeOldView () {
