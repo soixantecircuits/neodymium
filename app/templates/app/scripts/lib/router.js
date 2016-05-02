@@ -26,6 +26,9 @@ module.exports = (function router () {
   self.queue = null
   self.transitionTimeout = false
   self.transitionTimeoutDelay = 20000
+
+  events.add('transition');
+
   for (let i = 0; i < paths.length; i++) {
     let path = paths[i]
     for (let j = 0; j < path.routes.length; j++) {
