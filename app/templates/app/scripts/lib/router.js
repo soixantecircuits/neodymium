@@ -74,12 +74,12 @@ module.exports = (function router () {
       setBodyClass(toRoute, fromRoute)
       // init route controller
       <% if (stateMachine) { %>
-      controllers[route].init(toRoute, toState, toId)
-      // listen to state changes
+      controllers[toRoute] && controllers[toRoute].init && controllers[toRoute].init(toRoute, toState, toId)
+     // listen to state changes
       controllers[route].changedState.add((toState) => {
         setHashSilently(route + '/' + toState)
       }) <% } else { %>
-      controllers[toRoute].init(toRoute)<% } %>
+      controllers[toRoute] && controllers[toRoute].init && controllers[toRoute].init(toRoute)<% } %>
     })
   }
 
