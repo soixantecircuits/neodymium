@@ -38,6 +38,8 @@ module.exports = (function router () {
   }
 
   self.init = function init () {
+    self.initEvents()
+
     crossroads.bypassed.add(function (request) {<% if (stateMachine) { %>
       crossroads.parse('home/start')
       setHashSilently('home/start')<% } else { %>
@@ -50,28 +52,6 @@ module.exports = (function router () {
     crossroads.addRoute('/{route}', function (route) {<% } %> <% if (stateMachine) { %>
       handleRoute(route, state, id) <% } else { %>
       handleRoute(route) <% } %>
-    })
-
-    crossroads.addRoute('/{route}', function (route) {<% } %>
-      // store the last route
-      self.past = self.current
-      // destroy current controller
-      if (self.past) {
-        controllers[self.past].destroy()
-      }
-      // set route view
-      setView(views[route])
-      // add a class `route` to the body
-      setBodyClass(route)
-      // init route controller<% if (stateMachine) { %>
-      controllers[route].init(state, id)
-      // listen to state changes
-      controllers[route].changedState.add((state) => {
-        setHashSilently(route + '/' + state)
-      })<% } else { %>
-      controllers[route].init()<% } %>
-      // store current route
-      self.current = route
     })
 
     hasher.initialized.add(parseHash)
@@ -108,7 +88,7 @@ module.exports = (function router () {
 
   <% if (stateMachine) { %>
   function handleRoute (route, state, id) {<% } else { %>
-  function handleRoute(route) {<% } %>
+  function handleRoute (route) {<% } %>
     if (self.transitionning === true) {
       self.queue = route
       self.transitionTimeout = setTimeout(function () {
