@@ -109,14 +109,16 @@ module.exports = (function router () {
     if (self.past) {
       controllers[self.past].destroy()
     }
-    // set route view
+    // set route view   
     addView(views[route])
 
     // Call transitionOut on previous view
-    if (controllers[self.past]) {
-      controllers[self.past].transitionOut(self.past, route, state, id)
-    } else {
-      events.transition.dispatch('transition-out-end', undefined, route, state, id)
+    if (controllers[self.past]) {<% if (stateMachine) { %>
+      controllers[self.past].transitionOut(self.past, route, state, id)<% } else { %>
+      controllers[self.past].transitionOut(self.past, route)<% } %>
+    } else {<% if (stateMachine) { %>
+      events.transition.dispatch('transition-out-end', undefined, route, state, id)<% } else { %>
+      events.transition.dispatch('transition-out-end', undefined, route)<% } %>
     }
   }
 
