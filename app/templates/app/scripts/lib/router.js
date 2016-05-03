@@ -79,8 +79,8 @@ module.exports = (function router () {
       <% if (stateMachine) { %>
       controllers[toRoute] && controllers[toRoute].init && controllers[toRoute].init(toRoute, toState, toId)
      // listen to state changes
-      controllers[route].changedState.add((toState) => {
-        setHashSilently(route + '/' + toState)
+      controllers[toRoute].changedState.add((toState) => {
+        setHashSilently(toRoute + '/' + toState)
       }) <% } else { %>
       controllers[toRoute] && controllers[toRoute].init && controllers[toRoute].init(toRoute)<% } %>
     })
