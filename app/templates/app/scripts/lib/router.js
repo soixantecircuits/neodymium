@@ -24,6 +24,7 @@ module.exports = (function router () {
   self.past = ''
   self.current = ''
   self.queue = null
+  self.transitionning = false
   self.transitionTimeout = false
   self.transitionTimeoutDelay = 20000
 
@@ -65,6 +66,7 @@ module.exports = (function router () {
       // Remove content from #main-new
       removeOldView()
       clearTimeout(this.transitionTimeout)
+      this.transitionning = false
       this.transitionTimeout = false
       if (this.queue) {
         handleQueue()
