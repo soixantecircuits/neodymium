@@ -35,6 +35,8 @@
     "yosay": "^1.1.0"
   },
   "devDependencies": {
+    "get-port": "^2.1.0",
+    "gulp-env": "^0.4.0",
     "yeoman-assert": "^2.0.0"
   }
 }

@@ -1,5 +1,6 @@
 'use strict'
 const electron = require('electron')
+const fs = require('fs')
 <% if (native){ %>
 const server = require('./server/main.js')
 <% } %>
@@ -45,9 +46,9 @@ function createMainWindow () {
     directWrite: true
   }
   const win = new electron.BrowserWindow(winOptions)
-
+  
   if (process.env['NODE_ENV'] === 'dev') {
-    win.loadURL('http://0.0.0.0:6060/')
+    win.loadURL('http://0.0.0.0:' + fs.readFileSync('.port','utf-8'))
     win.openDevTools()
   } else {
     win.loadURL('file://' + __dirname + '/dist/index.html')
