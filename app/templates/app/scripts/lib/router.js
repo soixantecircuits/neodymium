@@ -27,16 +27,14 @@ module.exports = (function router () {
   self.transitionTimeout = false
   self.transitionTimeoutDelay = 20000
 
-  events.add('transition');
+  events.add('transition')
 
-  for (let i = 0; i < paths.length; i++) {
-    let path = paths[i]
-    for (let j = 0; j < path.routes.length; j++) {
-      let route = path.routes[j]
-      controllers[route] = require('../controllers/' + path.template)
-      views[route] = require('../../partials/' + path.template + '.html')
-    }
-  }
+  paths.forEach(function (path) {
+    path.routes.forEach(function (route) {
+      controllers[route] = require(`../controllers/${path.template}`)
+      views[route] = require(`../../partials/${path.template}.html`)
+    })
+  })
 
   self.init = function init () {
     self.initEvents()
