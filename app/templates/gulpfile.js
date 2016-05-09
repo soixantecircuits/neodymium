@@ -6,12 +6,20 @@ var webpack = require('webpack')
 var webpackOptions = require('./webpack.config')
 var compiler = webpack(webpackOptions)
 
+
+
 gulp.task('dev', function () {
-  connect.server({
-    host: '0.0.0.0',
-    port: 6060,
-    root: 'dist',
-    livereload: true
+
+  const getPort = require('get-port')
+
+  getPort().then(port => {
+    require('fs').writeFileSync('.port', port)
+    connect.server({
+      host: '0.0.0.0',
+      port: port,
+      root: 'dist',
+      livereload: true
+    })
   })
 
   gulp.src('./app/index.html').pipe(gulp.dest('dist/'))
@@ -25,7 +33,7 @@ gulp.task('dev', function () {
     } else if (jsonStats.warnings.length > 0) {
       console.warn(jsonStats.warnings)
     } else {
-      console.log(stats.toString({colors: true}))
+      console.log(stats.toString({ colors: true }))
     }
   })
 
