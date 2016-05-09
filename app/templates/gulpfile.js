@@ -9,9 +9,9 @@ var compiler = webpack(webpackOptions)
 
 
 gulp.task('dev', function () {
-  
+
   const getPort = require('get-port')
-  
+
   getPort().then(port => {
     require('fs').writeFileSync('.port', port)
     connect.server({
@@ -19,9 +19,9 @@ gulp.task('dev', function () {
       port: port,
       root: 'dist',
       livereload: true
-    })  
+    })
   })
-  
+
   gulp.src('./app/index.html').pipe(gulp.dest('dist/'))
 
   compiler.watch({}, function (err, stats) {
@@ -33,7 +33,7 @@ gulp.task('dev', function () {
     } else if (jsonStats.warnings.length > 0) {
       console.warn(jsonStats.warnings)
     } else {
-      console.log(stats.toString({colors: true}))
+      console.log(stats.toString({ colors: true }))
     }
   })
 
