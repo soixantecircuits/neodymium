@@ -4,8 +4,6 @@ module.exports = (function router () {
   const crossroads = require('crossroads')
   const hasher = require('hasher')
 
-  const events = require('./events')
-
   let self = {}
 
   const paths = [
@@ -23,12 +21,6 @@ module.exports = (function router () {
   let views = {}
   self.past = ''
   self.current = ''
-  self.queue = null
-  self.transitionning = false
-  self.transitionTimeout = false
-  self.transitionTimeoutDelay = 20000
-
-  events.add('transition')
 
   for (let i = 0; i < paths.length; i++) {
     let path = paths[i]
@@ -40,8 +32,6 @@ module.exports = (function router () {
   }
 
   self.init = function init () {
-    self.initEvents()
-
     crossroads.bypassed.add(function (request) {<% if (stateMachine) { %>
       crossroads.parse('home/start')
       setHashSilently('home/start')<% } else { %>
@@ -90,18 +80,6 @@ module.exports = (function router () {
   <% if (stateMachine) { %>
   function handleRoute (route, state, id) {<% } else { %>
   function handleRoute (route) {<% } %>
-    if (self.transitionning === true) {
-      self.queue = route
-      self.transitionTimeout = setTimeout(function () {
-        self.transitionning = false
-        <% if (stateMachine) { %>
-        handleRoute(route, state, id)<% } else { %>
-        handleRoute(route)<% } %>
-      }, self.transitionTimeoutDelay)
-      return
-    }
-    self.transitionning = true
-
     // store the last route
     self.past = self.current
     // store current route
@@ -110,22 +88,8 @@ module.exports = (function router () {
     if (self.past) {
       controllers[self.past].destroy()
     }
-    // set route view   
+    // set route view
     addView(views[route])
-
-    // Call transitionOut on previous view
-    if (controllers[self.past]) {<% if (stateMachine) { %>
-      controllers[self.past].transitionOut(self.past, route, state, id)<% } else { %>
-      controllers[self.past].transitionOut(self.past, route)<% } %>
-    } else {<% if (stateMachine) { %>
-      events.transition.dispatch('transition-out-end', undefined, route, state, id)<% } else { %>
-      events.transition.dispatch('transition-out-end', undefined, route)<% } %>
-    }
-  }
-
-  function handleQueue () {
-    self.queue = null
-    handleRoute(window.location.hash.replace('#/', ''))
   }
 
   function setBodyClass (route) {
