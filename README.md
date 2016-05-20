@@ -48,8 +48,6 @@ your-app/
 $ npm install --global generator-neodymium
 ```
 
-*Depending on your configuration, you ~~may~~ will encounter formatting issue right after the app generation. This is because `ejs`, the template engine yeoman uses, leaves empty lines in place of the omitted parts (e.g if you said you don't need a back-end, the back-end portion of your app README will be blank lines instead of not being here at all). This can lead to errors with the `package.json` file being invalid because of misplaced commas, etc. I'm currently looking for a solution to this using the yeoman transform streams, but until I figure this out in a clean and maintenable way, you'll have to deal with this by your own :/*
-
 ## Usage
 
 With [yo](https://github.com/yeoman/yo):

@@ -60,7 +60,7 @@ And in an other shell window:
 ```
 $ npm start
 # For Windows users :
-$ npm start-win
+$ npm run start-win
 ```<% } %><% if (native) { %>
 
 #### In node
