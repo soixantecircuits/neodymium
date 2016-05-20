@@ -28,7 +28,7 @@ module.exports = (function router () {
   self.transitionTimeout = false
   self.transitionTimeoutDelay = 20000
 
-  events.add('transition');
+  events.add('transition')
 
   for (let i = 0; i < paths.length; i++) {
     let path = paths[i]
@@ -87,7 +87,6 @@ module.exports = (function router () {
       controllers[toRoute] && controllers[toRoute].init && controllers[toRoute].init(toRoute)<% } %>
     })
   }
-
   <% if (stateMachine) { %>
   function handleRoute (route, state, id) {<% } else { %>
   function handleRoute (route) {<% } %>

@@ -16,7 +16,7 @@ require('electron-debug')()
 app.commandLine.appendArgument('--disable-pinch')
 app.commandLine.appendArgument('--overscroll-history-navigation=0')
 app.commandLine.appendArgument('--ignore-gpu-blacklist')
-app.commandLine.appendSwitch('remote-debugging-port', '8315');
+app.commandLine.appendSwitch('remote-debugging-port', '8315')
 
 // prevent window being garbage collected
 let mainWindow
@@ -28,7 +28,7 @@ function onClosed () {
 }
 
 function createMainWindow () {
-  var winOptions = {width: 1920, height: 1080}
+  const winOptions = {width: 1920, height: 1080}
   if (process.env['NODE_ENV'] !== 'dev') {
     winOptions.kiosk = true
     winOptions.frame = false
