@@ -1,6 +1,6 @@
 {
   "name": "generator-neodymium",
-  "version": "1.6.2",
+  "version": "1.6.3",
   "description": "Scaffolds a clean and combat ready electron app.",
   "license": "MIT",
   "repository": "soixantecircuits/neodymium",
@@ -35,6 +35,8 @@
     "yosay": "^1.1.0"
   },
   "devDependencies": {
+    "get-port": "^2.1.0",
+    "gulp-env": "^0.4.0",
     "yeoman-assert": "^2.0.0"
   }
 }

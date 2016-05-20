@@ -24,10 +24,11 @@ module.exports = (function router () {
   self.past = ''
   self.current = ''
   self.queue = null
+  self.transitionning = false
   self.transitionTimeout = false
   self.transitionTimeoutDelay = 20000
 
-  events.add('transition');
+  events.add('transition')
 
   for (let i = 0; i < paths.length; i++) {
     let path = paths[i]
@@ -65,6 +66,7 @@ module.exports = (function router () {
       // Remove content from #main-new
       removeOldView()
       clearTimeout(this.transitionTimeout)
+      this.transitionning = false
       this.transitionTimeout = false
       if (this.queue) {
         handleQueue()
@@ -79,13 +81,12 @@ module.exports = (function router () {
       <% if (stateMachine) { %>
       controllers[toRoute] && controllers[toRoute].init && controllers[toRoute].init(toRoute, toState, toId)
      // listen to state changes
-      controllers[route].changedState.add((toState) => {
-        setHashSilently(route + '/' + toState)
+      controllers[toRoute].changedState.add((toState) => {
+        setHashSilently(toRoute + '/' + toState)
       }) <% } else { %>
       controllers[toRoute] && controllers[toRoute].init && controllers[toRoute].init(toRoute)<% } %>
     })
   }
-
   <% if (stateMachine) { %>
   function handleRoute (route, state, id) {<% } else { %>
   function handleRoute (route) {<% } %>
@@ -109,14 +110,16 @@ module.exports = (function router () {
     if (self.past) {
       controllers[self.past].destroy()
     }
-    // set route view
+    // set route view   
     addView(views[route])
 
     // Call transitionOut on previous view
-    if (controllers[self.past]) {
-      controllers[self.past].transitionOut(self.past, route, state, id)
-    } else {
-      events.transition.dispatch('transition-out-end', undefined, route, state, id)
+    if (controllers[self.past]) {<% if (stateMachine) { %>
+      controllers[self.past].transitionOut(self.past, route, state, id)<% } else { %>
+      controllers[self.past].transitionOut(self.past, route)<% } %>
+    } else {<% if (stateMachine) { %>
+      events.transition.dispatch('transition-out-end', undefined, route, state, id)<% } else { %>
+      events.transition.dispatch('transition-out-end', undefined, route)<% } %>
     }
   }
 

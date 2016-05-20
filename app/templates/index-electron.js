@@ -1,5 +1,6 @@
 'use strict'
 const electron = require('electron')
+const fs = require('fs')
 <% if (native){ %>
 const server = require('./server/main.js')
 <% } %>
@@ -15,7 +16,7 @@ require('electron-debug')()
 app.commandLine.appendArgument('--disable-pinch')
 app.commandLine.appendArgument('--overscroll-history-navigation=0')
 app.commandLine.appendArgument('--ignore-gpu-blacklist')
-app.commandLine.appendSwitch('remote-debugging-port', '8315');
+app.commandLine.appendSwitch('remote-debugging-port', '8315')
 
 // prevent window being garbage collected
 let mainWindow
@@ -27,7 +28,7 @@ function onClosed () {
 }
 
 function createMainWindow () {
-  var winOptions = {width: 1920, height: 1080}
+  const winOptions = {width: 1920, height: 1080}
   if (process.env['NODE_ENV'] !== 'dev') {
     winOptions.kiosk = true
     winOptions.frame = false
@@ -45,9 +46,9 @@ function createMainWindow () {
     directWrite: true
   }
   const win = new electron.BrowserWindow(winOptions)
-
+  
   if (process.env['NODE_ENV'] === 'dev') {
-    win.loadURL('http://0.0.0.0:6060/')
+    win.loadURL('http://0.0.0.0:' + fs.readFileSync('.port','utf-8'))
     win.openDevTools()
   } else {
     win.loadURL('file://' + __dirname + '/dist/index.html')
