@@ -15,5 +15,13 @@ module.exports = (function home () {
   ctrl.destroy = function destroy () {
   }
 
+  ctrl.transitionIn = function transitionIn (resolve) {
+    TweenMax.fromTo('.main', 0.4, {opacity: 0}, {opacity: 1, onComplete: resolve})
+  }
+
+  ctrl.transitionOut = function transitionOut (resolve) {
+    TweenMax.fromTo('.main', 0.4, {opacity: 1}, {opacity: 0, onComplete: resolve})
+  }
+
   return ctrl
 })()
