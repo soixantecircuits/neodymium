@@ -110,7 +110,7 @@ module.exports = (function router () {
     if (self.past) {
       controllers[self.past].destroy()
     }
-    // set route view   
+    // set route view
     addView(views[route])
 
     // Call transitionOut on previous view
@@ -152,6 +152,7 @@ module.exports = (function router () {
     var newContainer = document.querySelector('#main-new')
     oldContainer.id = 'main-new'
     newContainer.id = 'main'
+    newContainer.className = 'main'
     oldContainer.innerHTML = ''
   }
 
