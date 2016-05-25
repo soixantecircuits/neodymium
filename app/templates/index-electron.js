@@ -31,7 +31,6 @@ function createMainWindow () {
   if (process.env['NODE_ENV'] !== 'dev') {
     winOptions.kiosk = true
     winOptions.frame = false
-    winOptions.resizable = false
     winOptions.fullScreen = true
     winOptions.alwaysOnTop = true
   }
