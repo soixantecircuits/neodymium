@@ -3,8 +3,9 @@ module.exports = (function router () {
 
   const crossroads = require('crossroads')
   const hasher = require('hasher')
+  const Q = require('q')
 
-  const events = require('./events')
+  let isTransitionning = false
 
   let self = {}
 
@@ -23,12 +24,6 @@ module.exports = (function router () {
   let views = {}
   self.past = ''
   self.current = ''
-  self.queue = null
-  self.transitionning = false
-  self.transitionTimeout = false
-  self.transitionTimeoutDelay = 20000
-
-  events.add('transition')
 
   for (let i = 0; i < paths.length; i++) {
     let path = paths[i]
@@ -40,8 +35,6 @@ module.exports = (function router () {
   }
 
   self.init = function init () {
-    self.initEvents()
-
     crossroads.bypassed.add(function (request) {<% if (stateMachine) { %>
       crossroads.parse('home/start')
       setHashSilently('home/start')<% } else { %>
@@ -61,47 +54,8 @@ module.exports = (function router () {
     hasher.init()
   }
 
-  self.initEvents = function initEvents () {
-    events.transition.on('transition-in-end', self, function (route) {
-      // Remove content from #main-new
-      removeOldView()
-      clearTimeout(this.transitionTimeout)
-      this.transitionning = false
-      this.transitionTimeout = false
-      if (this.queue) {
-        handleQueue()
-      }
-    })<% if (stateMachine) { %>
-    events.transition.on('transition-out-end', self, function (fromRoute, toRoute, toState, toId) {
-    <% } else { %>
-    events.transition.on('transition-out-end', self, function (fromRoute, toRoute) {<% } %>
-      // add a class `route` to the body
-      setBodyClass(toRoute, fromRoute)
-      // init route controller
-      <% if (stateMachine) { %>
-      controllers[toRoute] && controllers[toRoute].init && controllers[toRoute].init(toRoute, toState, toId)
-     // listen to state changes
-      controllers[toRoute].changedState.add((toState) => {
-        setHashSilently(toRoute + '/' + toState)
-      }) <% } else { %>
-      controllers[toRoute] && controllers[toRoute].init && controllers[toRoute].init(toRoute)<% } %>
-    })
-  }
-  <% if (stateMachine) { %>
-  function handleRoute (route, state, id) {<% } else { %>
-  function handleRoute (route) {<% } %>
-    if (self.transitionning === true) {
-      self.queue = route
-      self.transitionTimeout = setTimeout(function () {
-        self.transitionning = false
-        <% if (stateMachine) { %>
-        handleRoute(route, state, id)<% } else { %>
-        handleRoute(route)<% } %>
-      }, self.transitionTimeoutDelay)
-      return
-    }
-    self.transitionning = true
 
+  function handleRoute (route, state, id) {
     // store the last route
     self.past = self.current
     // store current route
@@ -110,22 +64,58 @@ module.exports = (function router () {
     if (self.past) {
       controllers[self.past].destroy()
     }
-    // set route view
-    addView(views[route])
-
-    // Call transitionOut on previous view
-    if (controllers[self.past]) {<% if (stateMachine) { %>
-      controllers[self.past].transitionOut(self.past, route, state, id)<% } else { %>
-      controllers[self.past].transitionOut(self.past, route)<% } %>
-    } else {<% if (stateMachine) { %>
-      events.transition.dispatch('transition-out-end', undefined, route, state, id)<% } else { %>
-      events.transition.dispatch('transition-out-end', undefined, route)<% } %>
-    }
+    handleTransitions(function () {
+      // set route view
+      addView(views[route])
+      removeOldView()
+      setBodyClass(route)
+      // Init controller
+      controllers[route] && controllers[route].init && controllers[route].init(route, state, id)
+    })
   }
 
-  function handleQueue () {
-    self.queue = null
-    handleRoute(window.location.hash.replace('#/', ''))
+  function handleTransitions (routeCallback) {
+    isTransitionning = true
+    let transitionOut = null
+
+    if (controllers[self.past]) {
+      transitionOut = (typeof (controllers[self.past].transitionOut) === 'function')
+                      ? controllers[self.past].transitionOut
+                      : null
+    }
+    let transitionIn = null
+    if (controllers[self.current]) {
+      transitionIn = ((typeof controllers[self.current].transitionIn) === 'function')
+                      ? controllers[self.current].transitionIn
+                      : null
+    }
+
+    triggerTransition(transitionOut,
+      function promiseCallback () {
+        triggerTransition(transitionIn, function () {
+          ;(typeof (routeCallback) === 'function') && routeCallback()
+          isTransitionning = false
+        }, function () {
+          ;(typeof (routeCallback) === 'function') && routeCallback()
+        })
+      }, function defaultCallback () {
+        ;(typeof (routeCallback) === 'function') && routeCallback()
+        isTransitionning = false
+      })
+  }
+
+  function triggerTransition (transition, promiseCallback, defaultCallback) {
+    if (transition) {
+      Q.Promise(transition)
+      .then(function success () {
+        ;(typeof (promiseCallback) === 'function') && promiseCallback()
+      }, function error (error) {
+        ;(typeof (defaultCallback) === 'function') && defaultCallback()
+        console.log('router.js - ', error)
+      })
+    } else {
+      ;(typeof (defaultCallback) === 'function') && defaultCallback()
+    }
   }
 
   function setBodyClass (route) {
