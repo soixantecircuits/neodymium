@@ -1,3 +1,7 @@
+# Notice ❗️
+
+Neodymium has changed, and its new version uses the full power of [Vuejs](vuejs.org) and its ecosystem of libraries and plugins. Go **[here](https://github.com/soixantecircuits/nd)** to check it out.
+
 # Neodymium :metal:
 
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
