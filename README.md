@@ -1,5 +1,5 @@
 # ❗️DEPRECATED ❗️
 
-USE **[nd](https://github.com/soixantecircuits/nd)** 
+USE **[soixantecircuits electron-vue](https://github.com/soixantecircuits/electron-vue)** 
 
 # ❗️DEPRECATED ❗️
